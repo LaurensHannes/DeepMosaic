@@ -128,7 +128,7 @@ def getOptions(args=sys.argv[1:]):
                                                                      (humandb directory should already be specified inside)")
     parser.add_argument("-db", "--dbtype", required=False, default="gnomad_genome", help="db file located in annovar directory,  this feeds directly into the annovar parameter --dbtype, default: gnomad_genome")
     parser.add_argument("-b", "--build", required=False, default="hg19", help="Version of genome build, options: hg19, hg38")
-    parser.add_argument("-t", "--threads", required=False, default=4, help="number of available threads, default: 4")
+    parser.add_argument("-t", "--threads", type=int, required=False, default=4, help="number of available threads, default: 4")
 
     options = parser.parse_args(args)
     return options
