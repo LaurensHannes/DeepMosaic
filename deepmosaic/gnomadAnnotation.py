@@ -17,7 +17,7 @@ def gnomad_annotation(all_variants, output_dir, annovar, annovar_db, build, dbty
         annovar_command_1 = annovar + " -geneanno -build " + build + " -dbtype refGene " + gm_path + " " + annovar_db  + " -outfile " + \
                             output_dir + "input" 
         subprocess.call(annovar_command_1, shell=True)
-        annovar_command_2 = annovar + " -filter" + " --thread"  + threads + "-build " + build + " -dbtype " + dbtype + " " + gm_path + " " + annovar_db + " -outfile " + \
+        annovar_command_2 = annovar + " -filter" + " --thread"  + threads + " -build " + build + " -dbtype " + dbtype + " " + gm_path + " " + annovar_db + " -outfile " + \
                             output_dir + "input" 
         subprocess.call(annovar_command_2, shell=True)
     except:
