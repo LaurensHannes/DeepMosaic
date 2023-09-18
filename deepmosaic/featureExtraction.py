@@ -128,6 +128,8 @@ def getOptions(args=sys.argv[1:]):
                                                                      (humandb directory should already be specified inside)")
     parser.add_argument("-db", "--dbtype", required=False, default="gnomad_genome", help="db file located in annovar directory,  this feeds directly into the annovar parameter --dbtype, default: gnomad_genome")
     parser.add_argument("-b", "--build", required=False, default="hg19", help="Version of genome build, options: hg19, hg38")
+    parser.add_argument("-t", "--threads", required=False, default="4", help="number of available threads, default: 4")
+
     options = parser.parse_args(args)
     return options
 
@@ -160,6 +162,8 @@ def main():
     global build 
     build = options.build
     dbtype = options.dbtype
+    global threads
+    threads = options.threads
     
     if annovar_path.endswith("/"):
         annovar = annovar_path + "annotate_variation.pl"
@@ -242,12 +246,12 @@ def main():
     repeats_dict = repeats_annotation(all_variants, output_dir, build)
 
     #annovar annotation for gnomad
-    function_dict, gnomad_dict = gnomad_annotation(all_variants, output_dir, annovar, annovar_db, build, dbtype)
+    function_dict, gnomad_dict = gnomad_annotation(all_variants, output_dir, annovar, annovar_db, build, dbtype, threads)
 
     #draw images
     try:
-        pool = Pool(8) # on 8 processors
-        results = pool.map(multiprocess_iterator, all_variants, 8)
+        pool = Pool(threads) # on 8 processors
+        results = pool.map(multiprocess_iterator, all_variants, threads)
         for result in results:
             if not result:
                 continue
