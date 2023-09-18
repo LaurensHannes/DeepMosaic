@@ -163,7 +163,7 @@ def main():
     build = options.build
     dbtype = options.dbtype
     global threads
-    threads = options.threads
+    threads = int(options.threads)
     
     if annovar_path.endswith("/"):
         annovar = annovar_path + "annotate_variation.pl"
