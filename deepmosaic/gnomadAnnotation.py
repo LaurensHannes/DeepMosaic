@@ -14,11 +14,11 @@ def gnomad_annotation(all_variants, output_dir, annovar, annovar_db, build, dbty
                 sample_name, bam, chrom, pos, ref, alt, depth, sex = variant
                 key = "_".join([chrom, pos, ref, alt])
                 tmp.write("\t".join(map(str, [chrom, int(pos), int(pos) + len(ref) -1, ref, alt, key])) + "\n")
-        annovar_command_1 = annovar + " -geneanno -build " + build + " -dbtype refGene " + gm_path + " " + annovar_db + " -outfile " + \
-                            output_dir + "--maxgenethread " + threads + " --thread " + threads + "input" 
+        annovar_command_1 = annovar + " -geneanno -build " + build + " -dbtype refGene " + gm_path + " " + annovar_db  + "--maxgenethread " + threads + " --thread " + threads + " -outfile " + \
+                            output_dir + "input" 
         subprocess.call(annovar_command_1, shell=True)
-        annovar_command_2 = annovar + " -filter -build " + build + " -dbtype " + dbtype + " " + gm_path + " " + annovar_db + " -outfile " + \
-                            output_dir + "--maxgenethread " + threads + " --thread " + threads + "input" 
+        annovar_command_2 = annovar + " -filter -build " + build + " -dbtype " + dbtype + " " + gm_path + " " + annovar_db + "--maxgenethread " + threads + " --thread " + threads + " -outfile " + \
+                            output_dir + "input" 
         subprocess.call(annovar_command_2, shell=True)
     except:
         sys.stderr.write("Error with gnomad annotation. Check if you have correctly installed Annovar.\n")
